@@ -1,0 +1,156 @@
+<?php
+class ConnectDB {
+    /** @var mysqli|null $connection - Database connection object */
+    private $connection = null;
+
+    /** @var array $dsn - Stores DB connection parameters from dbParams.php */
+    private $dsn = [];
+
+    /**
+     * Load database credentials from dbParams.php -- F.Tumulak
+     */
+		 
+		private function loadDSN() {
+				$oldConfig = __DIR__ . '/../config/dbParams.php';
+
+				if (file_exists($oldConfig)) {
+						// Include the file in *this object’s scope* so `$this->dsn[...]` lines execute correctly
+						include($oldConfig);
+
+						// ✅ At this point, dbParams.php has already populated $this->dsn
+						if (isset($this->dsn) && is_array($this->dsn)) {
+								return; // done
+						} else {
+								die("Invalid database configuration in dbParams.php (dsn not set).");
+						}
+				} else {
+						die("Missing database configuration: dbParams.php not found.");
+				}
+		}
+
+    /**
+     * Establish database connection
+     */
+    protected function connect() {
+        // Load credentials only if not already loaded
+        if (empty($this->dsn)) {
+            $this->loadDSN();
+        }
+
+        // Create a new connection, inherit new functions from mysqli_connect
+        $this->connection = @mysqli_connect(
+            $this->dsn['host'],
+            $this->dsn['username'],
+            $this->dsn['pwd'],
+            $this->dsn['database']
+        );
+
+        if (mysqli_connect_errno()) {
+            die("Database connection failed: " . mysqli_connect_error());
+        }
+
+        return $this->connection;
+    }
+
+    /**
+     * Execute a prepared SELECT query
+     */
+    protected function select($query, $types = "", $params = []) {
+        $conn = $this->connect();
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            die("Query preparation failed: " . $conn->error);
+        }
+
+        if (!empty($types) && !empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        return $data;
+    }
+
+		// ✅ Get the first row (assoc array or null)
+		protected function selectOne($query, $types = "", $params = []) {
+				$rows = $this->select($query, $types, $params);
+				return $rows[0] ?? null;
+		}
+
+		// ✅ Get a single value (first column of first row, or null)
+		protected function selectValue($query, $types = "", $params = []) {
+				$row = $this->selectOne($query, $types, $params);
+				if ($row) {
+						return array_values($row)[0]; // first column value
+				}
+				return null;
+		}
+
+    /**
+     * Execute a prepared CREATE/INSERT/UPDATE/DELETE query
+     */
+		protected function execute($query, $types = "", $params = [], $withCount = false) {
+				$conn = $this->connect(); 
+				$stmt = $conn->prepare($query);
+				if (!$stmt) {
+						throw new \Exception("Query preparation failed: " . $conn->error);
+				}
+
+				if (!empty($types) && !empty($params)) {
+						$stmt->bind_param($types, ...$params);
+				}
+
+				$success = $stmt->execute();
+				if (!$success) {
+						throw new \Exception("Query execution failed: " . $stmt->error);
+				}
+
+				// ✅ Get affected rows
+				$affectedRows = $stmt->affected_rows;
+
+				$stmt->close();
+
+				// ✅ Decide what to return
+				if ($withCount) {
+						return $affectedRows; // returns an int (0,1,2…)
+				} else {
+						return $success; // returns true/false
+				}
+		}
+
+    /**
+     * Close database connection
+     */
+ 
+    public function close() {
+        if ($this->connection) {
+            mysqli_close($this->connection);
+            $this->connection = null;
+        }
+    }
+	
+		/**
+     * Helper function
+     */
+
+		public function beginTransaction() {
+        $this->connect()->begin_transaction();
+    }
+
+    public function commit() {
+        $this->connect()->commit();
+    }
+
+    public function rollback() {
+        $this->connect()->rollback();
+    }
+
+    public function get_server_info() {
+				//The server_info property of the mysqli object is a property, not a method
+        return $this->connect()->server_info; //no parenthesis! --F.Tumulak
+    }
+		
+}

@@ -1,0 +1,93 @@
+body{
+	font-family:Arial,sans-serif;
+	background:#f4f6f9;
+	margin:0;
+	padding:20px;
+}
+
+.container{
+	max-width:1400px;
+	margin:auto;
+}
+
+h1{
+	text-align:center;
+	margin-bottom:30px;
+}
+
+.grid{
+	display:grid;
+	grid-template-columns:repeat(auto-fit,minmax(500px,1fr));
+	gap:20px;
+}
+
+.card{
+	background:#fff;
+	padding:20px;
+	border-radius:12px;
+	box-shadow:	0 2px 8px	rgba(0,0,0,.12);
+	overflow:hidden;
+}
+
+.card-wide{
+	grid-column:
+	span 2;
+	height:400px
+}
+
+#ddcLegend, #dashboardFilters{
+	grid-column:
+	span 2;
+	
+	background:#fff;
+	padding:20px;
+	border-radius:12px;
+	box-shadow:	0 2px 8px	rgba(0,0,0,.12);
+	overflow:hidden;
+}
+
+#dashboardFilters{
+	margin-bottom: 20px;
+	display:flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.legend-section{
+	display:flex;
+	flex-wrap:wrap;
+	gap:10px;
+	
+}
+
+.legend-item{
+	display:flex;
+	align-items:center;
+	justify-content: space-between;
+	gap:5px;
+}
+
+.legend-color-box{
+	width:35px;
+	height:12px;
+	border-radius:4px;
+}
+
+.dashboard-grid{
+	display:grid;
+
+	grid-template-columns:
+	repeat(
+	auto-fit,
+	minmax(500px,1fr)
+	);
+
+	gap:20px;
+
+	align-items:start;
+}
+
+.card-full{
+	grid-column:
+	1 / -1;
+}
