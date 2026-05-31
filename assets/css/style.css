@@ -10,9 +10,10 @@ body{
 	margin:auto;
 }
 
-h1{
+h2{
 	text-align:center;
 	margin-bottom:30px;
+	white-space: nowrap;
 }
 
 .grid{
@@ -90,4 +91,26 @@ h1{
 .card-full{
 	grid-column:
 	1 / -1;
+}
+
+@media (max-width:900px){
+
+		#dashboardFilters {display: none}
+
+    .dashboard-grid{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .card,
+    .card-wide,
+    .card-full{
+
+        grid-column:
+            1 / -1;
+
+    }
+		
 }

@@ -6,12 +6,14 @@ $startMonth = date('Y-m',strtotime('-11 months'));
 <!DOCTYPE html>
 <html>
 	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />	
 		<link rel="stylesheet" href="assets/css/style.css">
 		<script src="assets/js/chart.js"></script>
 	</head>
 
 	<body>
-	<h1>BurauenBiblio Analytics</h1>
+	<h2>BurauenBiblio Analytics</h2>
 
 		<form id="dashboardFilters">
 			<label>Start </label>
