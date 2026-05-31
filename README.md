@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/1254859030.svg)](https://doi.org/10.5281/zenodo.20472311)
 # 📊 BurauenBiblio Analytics
 
 **BurauenBiblio Analytics** is an independent research and analytics dashboard built around the BurauenBiblio library ecosystem.
