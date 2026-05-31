@@ -205,7 +205,7 @@ Possible future enhancements:
 
 ## 📜 License
 
-This project follows the licensing model of its parent ecosystem (GPL-V2) where applicable.
+This project follows the licensing model of its parent ecosystem (GPL-2.0) where applicable.
 
 Please retain original attribution and copyright notices when reusing or adapting related components.
 
