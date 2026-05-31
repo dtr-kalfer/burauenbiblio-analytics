@@ -6,6 +6,13 @@ Its primary purpose is to provide **visual insights, collection intelligence, ci
 
 Rather than being embedded directly into the library management system, this project serves as a **dedicated analytics layer** for research, reporting, monitoring, and future data exploration.
 
+### 👀 Images
+![Collection and Circulation Chart](./readme_assets/collection_circulation.webp)
+![Collection and Circulation Chart](./readme_assets/library_attendance_generator.webp)
+![Collection and Circulation Chart](./readme_assets/ddc_random_sample_generator.webp)
+### 👀 Live preview
+*(To follow)*
+
 ---
 
 ## ✨ Features
@@ -211,4 +218,5 @@ Built as part of the broader **BurauenBiblio** ecosystem.
 Special thanks to open-source communities, library software developers, educators, and library practitioners supporting accessible information systems and analytics.
 
 > DDC category descriptions are adapted from [Wikipedia](https://en.wikipedia.org/wiki/List_of_Dewey_Decimal_classes) under the [CC BY-SA 4.0 License](https://creativecommons.org/licenses/by-sa/4.0/)
+
 > [Chart.js](https://github.com/chartjs/Chart.js) – Data visualization (MIT)
